@@ -1,0 +1,53 @@
+Check your docker installation
+ - docker version (should be 19.03 or later)
+
+Download milvus docker file and rename to docker-compose.yml
+ - wget https://github.com/milvus-io/milvus/releases/download/v2.2.11/milvus-standalone-docker-compose.yml -O docker-compose.yml
+go to docker-compose.yml
+ - This file define three services needed for milvus
+   - etcd: Volum assigned for Data persisting.
+   - minio: 
+   - standalone: It actually runs milvus
+
+Check Docker is running 
+ - to to docker app 
+
+start milvus 
+ - docker compose up
+To check the running services
+ - docker compose ps
+ - Also go to Docker UI
+
+Now, how to insall Attu
+- Attu is an efficient open-source management tool for milvus. It provide GUI allowing you to easily
+interact with your vector milvus database. You can visualize your cluster status, manage metadata, perform
+data queris and much more.
+
+ - open docker-compose.yml and add following to the service block.
+ attu:
+    container_name: attu
+    image: zilliz/attu:v2.2.6
+    environment:
+      MILVUS_URL: milvus-standalone:19530
+    ports:
+      - "8000:3000"
+    depends_on:
+      - "standalone"
+
+run this command:
+ - docker compose up -d 
+
+open browser and go to localhost:8000
+username: root
+password: Milvis 
+
+Good material:
+# https://milvus.io/docs/example_code.md
+# https://www.youtube.com/watch?v=kh1CSlQF788&list=PLPg7_faNDlT5Fb8WN8r1PzzQTNzdechnS&index=5
+# YouTube Playlist https://www.youtube.com/playlist?list=PLPg7_faNDlT5Fb8WN8r1PzzQTNzdechnS
+
+
+Hello World code using Jupyter Notebook
+First Milvus.ipynb
+
+
